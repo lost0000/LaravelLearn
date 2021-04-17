@@ -20,6 +20,8 @@ class Post extends Model
         return $this->likes->contains('user_id', $user->id); //Collection method
     }
 
+
+
     public function user() 
     {
         return $this -> belongsTo(User::class);
