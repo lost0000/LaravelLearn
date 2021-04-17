@@ -34,8 +34,22 @@
 
                         <p class="mb-2">{{ $post-> body }}]</p>
 
-                        {{-- <div class="mb-2"> {{ $post - > body}} --}}
-
+                        <div class="flex items-center">
+                            @if (!$post->likedBy(auth()->user()))
+                                 <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
+                                    @csrf
+                                    <button type="submit" class="text-blue-500">Like</button>
+                                </form>
+                            @else
+                                <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
+                                    @csrf
+                                    {{-- Method spoofing, allowed delete where u cant use delete instead of post using html --}}
+                                    @method('DELETE') 
+                                    <button type="submit" class="text-blue-500">Unlike</button>
+                                </form>
+                            @endif
+                            <span> {{ $post->likes->count() }} {{ Str::plural('like', $post->likes->count()) }}</span>
+                        </div>
                     </div>
                 @endforeach
 
