@@ -28,47 +28,8 @@
 
             @if ($posts->count())
                 @foreach($posts as $post) {{-- //post models --}}
-                
-                    <div class="mb-4">
-                        <a href="" class="font-bold">{{ $post->user->name }}</a> <span class="text-gray-600 text-sm"> {{ $post->created_at->diffForHumans() }}</span>
-
-                        <p class="mb-2">{{ $post-> body }}</p>
-
-
-                        {{-- Delete post Method --}}
-                        
-                        @can('delete', $post)
-                            <form action="{{ route('posts.destroy', $post) }}" method="post">
-                                @csrf
-                                @method('DELETE') 
-                                <button type="submit" class="text-blue-500">Delete</button>
-                            </form>
-                        @endcan
+                <x-post :post="$post"/>
                     
-
-                        <div class="flex items-center">
-                            @auth
-                            @if (!$post->likedBy(auth()->user()))
-                                 <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
-                                    @csrf
-                                    <button type="submit" class="text-blue-500">Like</button>
-                                </form>
-                            @else
-                                <form action="{{ route('posts.likes', $post) }}" method="post" class="mr-1">
-                                    @csrf
-                                    {{-- Method spoofing, allowed delete where u cant use delete instead of post using html --}}
-                                    @method('DELETE') 
-                                    <button type="submit" class="text-blue-500">Unlike</button>
-                                </form>
-                                @endif
-
-                                
-
-                            @endauth
-                            
-                            <span> {{ $post->likes->count() }} {{ Str::plural('like', $post->likes->count()) }}</span>
-                        </div>
-                    </div>
                 @endforeach
 
                 {{ $posts->links() }}
