@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['guest']);
+    }
+
     public function index()
     {
         
@@ -17,13 +23,15 @@ class LoginController extends Controller
 
     public function store(Request $request)
     {
+        
+
 
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if (!auth()->attempt($request->only('email', 'password'))) //if user, otherwise null
+        if (!auth()->attempt($request->only('email', 'password'), $request->remember)) //if user, otherwise null
         {
             //if the login request failed, it goes back, and flashes a message saying invalid login details
             return back()->with('status', 'Invalid login details');
