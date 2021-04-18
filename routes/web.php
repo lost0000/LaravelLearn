@@ -3,7 +3,9 @@
 //IMPORT THE CONTROLLERS :)
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\UserPostController;
 use App\Http\Controllers\DashboardController;
@@ -18,6 +20,10 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
+
+Route::get('/cart',  [CartController::class, 'index'])->name('cart');
+    
+Route::get('/shop',  [ShopController::class, 'index'])->name('shop');
 
 Route::get('/users/{user:username}/posts',  [UserPostController::class, 'index'])->name('users.posts');
 

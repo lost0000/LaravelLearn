@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Cart;
 use App\Models\Like;
 use App\Models\Post;
 use Illuminate\Notifications\Notifiable;
@@ -57,4 +58,15 @@ class User extends Authenticatable
     public function recievedLikes() {
         return $this->hasManyThrough(Like::class, Post::class);
     }
+
+
+    // SHOPPING CART VVVVV
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    //END SHOPPING CART
+
 }

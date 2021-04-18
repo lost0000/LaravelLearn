@@ -5,10 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Posty</title>
-
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <script>
+
+        </script>
+
     </head>
+
     <body class="bg-gray-200">
+
         <nav class="p-6 bg-white flex justify-between mb-6">
             <ul class="flex items-center">
 
@@ -19,7 +27,13 @@
                     <a href="{{ route('dashboard') }}" class="p-3">Dashboard</a>
                 </li>
                 <li>
-                    <a href="{{ route('posts') }}" class="p-3">Post</a>
+                    <a href="{{ route('posts') }}" class="p-3">Posts</a>
+                </li>
+                <li>
+                    <a href="{{ route('shop') }}" class="p-3">Shop</a>
+                </li>
+                <li>
+                    <a href="{{ route('cart') }}" class="p-3">Cart</a>
                 </li>
             </ul>
 
@@ -42,7 +56,7 @@
                 @endif --}}
 
                 {{-- //ALTERNATE AUTH STATEMENT, BETTER --}}
-                @auth
+                @if (Auth::check())
                 <li>
                     <a href="" class="p-3">{{ auth()->user()->name }}</a>
                 </li>
@@ -52,22 +66,16 @@
                         <button type="submit">Logout</button>
                     </form>
                 </li>
-                @endauth
                 
-                @guest
+                @else
                 <li>
                     <a href="{{ route('login') }}" class="p-3">Login</a>
                 </li>
                 <li>
                     <a href="{{ route('register') }}" class="p-3">Register</a>
                 </li>
-                @endguest
+                @endif
 
-
-
-                
-                
-                
                 
             </ul>
         </nav>
