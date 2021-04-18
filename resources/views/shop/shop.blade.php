@@ -77,13 +77,17 @@
                        var html = ``;
                        results.forEach(function(result) {
                            // build a html string here
-                           html += `<div class="card">
-                        <img src="{{URL::asset('/image/coffee.jpg')}}" alt="ShopImage" style="width:100%">
-                        <h1>`+ result.title +  `</h1>
-                        <p class="price">`+ result.price +  `</p>
-                        <p>`+ result.type +  `</p>
-                        <p><button>Add to Cart</button></p>
-                        </div>` 
+                           html += '<form action="{{ route('index') }}" method="POST"> <input type="hidden" name="_token" value="{{ csrf_token() }}">' +
+                            `<div class="card">` + `<input type="hidden" name="product_id" value="` + result.id + `"/>` + ` 
+                           <img src="{{URL::asset('/image/coffee.jpg')}}" alt="ShopImage" style="width:100%">
+                           <h1>`+ result.title +  `</h1>
+                           <p class="price">`+ result.price +  `</p>
+                           <p>`+ result.type +  `</p>`;
+                           @if (Auth::check())
+                           html += `<p><button type="submit">Add to Cart</button></p>`
+                           @endif
+                           html += `</div>`
+                           + '</form>'
                        });
                        $('#shoppage').html(html);
                     });
@@ -95,8 +99,7 @@
              <div id="shoppage">
              </div>
             
-
-              
+             
 
         </div>
     </div>

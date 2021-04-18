@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\CartItem;
+use App\Models\Cart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,7 +17,7 @@ class Product extends Model
     ];
 
     public function carts(){
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(Cart::class);
     }
 
     // public function returnForShop() 

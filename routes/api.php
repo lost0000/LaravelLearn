@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\PostLikeController;
@@ -10,7 +12,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,10 @@ use App\Models\Product;
 |
 */
 
+// Route::group(['middleware' => 'api'], function () {
+
+//     Route::auth();
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -33,6 +38,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 
 Route::get('/shop',  [ShopController::class, 'jsondata'])->name('index');
+Route::post('/shop',  [ShopController::class, 'addtocart'])->name('index');
 
 
 Route::get('/cart',  [CartController::class, 'index'])->name('cart');
+// });
