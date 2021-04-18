@@ -41,5 +41,5 @@ Route::get('/shop',  [ShopController::class, 'jsondata'])->name('index');
 Route::post('/shop',  [ShopController::class, 'addtocart'])->name('index');
 
 
-Route::get('/cart',  [CartController::class, 'index'])->name('cart');
+Route::get('/cart',  [CartController::class, 'cartdata'])->name('cartindex');
 // });

@@ -5,32 +5,9 @@
         <div class="w-8/12 bg-white p-6 rounded-lg">
 
 
-        {{-- JS --}}
 
-        {{-- <script>
-            $(document).ready(function() {
-                $('#shoppage').html("loading...");
-                $.ajax({
-                   method: "GET",
-                   url: "{{ route('shop') }}" 
-                }).done(function(response) {
-                   var results = JSON.parse(response);
-                   var html = ``;
-                   results.forEach(function(result) {
-                       // build a html string here
-                       html += `<div class="card">
-                        <img src="{{URL::asset('/image/coffee.jpg')}}" alt="ShopImage" style="width:100%">
-                        <h1>`+ result.title +  `</h1>
-                        <p class="price">`+ result.price +  `</p>
-                        <p>`+ result.type +  `</p>
-                        <p><button>Add to Cart</button></p>
-                        </div>` 
-                        + result.property;
-                   });
-                   $('#shoppage').html(html);
-                });
-             });
-             </script> --}}
+
+
 
              <style>
 
@@ -78,10 +55,10 @@
                        results.forEach(function(result) {
                            // build a html string here
                            html += '<form action="{{ route('index') }}" method="POST"> <input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-                            `<div class="card">` + `<input type="hidden" name="product_id" value="` + result.id + `"/>` + ` 
+                            `<div class="card">` + `<input type="hidden" name="user_id" value="{{Auth::id()}}"/>` + `<input type="hidden" name="product_id" value="` + result.id + `"/>` + ` 
                            <img src="{{URL::asset('/image/coffee.jpg')}}" alt="ShopImage" style="width:100%">
                            <h1>`+ result.title +  `</h1>
-                           <p class="price">`+ result.price +  `</p>
+                           <p class="price">$`+ result.price +  `</p>
                            <p>`+ result.type +  `</p>`;
                            @if (Auth::check())
                            html += `<p><button type="submit">Add to Cart</button></p>`

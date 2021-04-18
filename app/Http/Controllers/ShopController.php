@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +14,10 @@ class ShopController extends Controller
 {
 
 
-    public function __construct()
-{
-    $this->middleware('auth');
-}
+//     public function __construct()
+// {
+//     $this->middleware('auth:api');
+// }
 
     public function index() 
     {
@@ -29,60 +30,58 @@ class ShopController extends Controller
 
     public function jsondata()
     {
-        $products = Product::get();
+        $products = Product::get(); 
         return json_encode($products);
     }
 
     public function addtocart(Request $request)
     {
-        // $user = Auth::user();
-         dd($id = Auth::id());
-        // dd($request->$user());
-        //  dd($id = $request->$user->id());
 
-        // dd($user = auth()->user());
-        // dd($id = auth()->user()->id);
-//under
-        // $name = $request->all();
+        $name = $request->all();
         
+        $user = User::find($name['user_id']);
         
-        // $product = Product::find($name['product_id']);
+        $product = Product::find($name['product_id']);
+        // $productprice = Product::find($name['price']);
+        // $producttitle = Product::find($name['title']);
 
-        // if(!$product){
-        //     abort(404);
-        // }
 
-        // $cart = session()->get('cart');
+        if(!$product){
+            abort(404);
+        }
+
+        $cart = session()->get('cart');
         
-        // //if empty cart, insert first product
-        // if(!$cart) {
-        //     $cart = [
-        //             "user_id" => Auth::id(),
-        //             "product_id" => $product-> id,
-        //             "quantity" => 1
-        //         ];
+        //if empty cart, insert first product
+        if(!$cart) {
+            $cart = [ 
+                    "user_id" => $user-> id,
+                    "product_id" => $product-> id,
+                    "quantity" => 1,
+                    "price" => $product-> price,
+                    "title" => $product->title
+                ];
 
-        //         Cart::create($cart);
+                Cart::create($cart);
                 
-        //         return redirect()->back()->with('success', 'Product added to cart');
-        //     }
+                return redirect()->back()->with('success', 'Product added to cart');
+            }
+
+            $cart = [ 
+                "user_id" => $user-> id,
+                "product_id" => $product-> id,
+                "quantity" => 1
+            ];
+
+            Cart::create($cart);
+            
+            return redirect()->back()->with('success', 'Product added to cart');
+
         
+       
 
-//          if (isset($cart[$id])) {
-//  
-//                         $cart['quantity']++;
-//              
-
-//              
-//                         return redirect()->back()->with('success', 'Product added to cart successfully!');
-//              
-//                     }
-
-        // auth() -> user() -> cart() -> create([
-        //     'body' => $request -> body
-        // ]);
+    
     }
-
 
     // public function store(Product $product, Request $request)
     //     {
@@ -104,4 +103,5 @@ class ShopController extends Controller
     //         ]);
     //     }
     
-}
+
+    }
